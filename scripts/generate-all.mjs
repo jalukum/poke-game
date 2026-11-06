@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { canvas, packTiles, scaleNearest } from './lib/canvas.mjs';
+import { canvas, hex, packTiles, scaleNearest } from './lib/canvas.mjs';
 import { encodePng } from './lib/png.mjs';
 import { createArt } from './lib/art.mjs';
 import { GAME_CONFIG, buildMaps, tiledDocument } from './lib/world.mjs';
@@ -19,6 +19,10 @@ fs.mkdirSync(path.join(root, 'public/data/dialogue'), { recursive: true });
 
 fs.writeFileSync(path.join(root, 'public/tilesets/overworld.png'), encodePng(sheet.w, sheet.h, sheet.data));
 fs.writeFileSync(path.join(root, 'public/sprites/player.png'), encodePng(art.player.w, art.player.h, art.player.data));
+fs.writeFileSync(path.join(root, 'public/sprites/player_cap.png'), encodePng(art.playerCap.w, art.playerCap.h, art.playerCap.data));
+fs.writeFileSync(path.join(root, 'public/sprites/player_ribbon.png'), encodePng(art.playerRibbon.w, art.playerRibbon.h, art.playerRibbon.data));
+const worldMap = paintWorldMap();
+fs.writeFileSync(path.join(root, 'public/sprites/worldmap.png'), encodePng(worldMap.w, worldMap.h, worldMap.data));
 fs.writeFileSync(path.join(root, 'public/sprites/npc.png'), encodePng(art.npc.w, art.npc.h, art.npc.data));
 fs.writeFileSync(path.join(root, 'public/sprites/item.png'), encodePng(art.item.w, art.item.h, art.item.data));
 
@@ -75,7 +79,7 @@ const town = renderMap(maps.town, art, GAME_CONFIG.start.x, GAME_CONFIG.start.y)
 fs.writeFileSync(path.join(previews, 'town.png'), encodePng(town.w, town.h, town.data));
 const beach = renderMap(maps.route_beach, art, 12, 13);
 fs.writeFileSync(path.join(previews, 'beach.png'), encodePng(beach.w, beach.h, beach.data));
-const interior = renderMap(maps.poke_center, art, 7, 7);
+const interior = renderMap(maps.hearth, art, 7, 7);
 fs.writeFileSync(path.join(previews, 'center.png'), encodePng(interior.w, interior.h, interior.data));
 const actor = scaleNearest(art.player, 4);
 fs.writeFileSync(path.join(previews, 'player.png'), encodePng(actor.w, actor.h, actor.data));
@@ -94,6 +98,26 @@ function crop(src, x, y, w, h) {
     }
   }
   return out;
+}
+
+function paintWorldMap() {
+  const map = canvas(240, 160);
+  map.fill(0, 0, 240, 160, hex('#7ec850'));
+  map.fill(0, 0, 240, 36, hex('#e8f4ff'));
+  map.fill(150, 0, 90, 48, hex('#6a9a48'));
+  map.fill(0, 118, 240, 42, hex('#f0d898'));
+  map.fill(0, 146, 110, 14, hex('#3c7ed0'));
+  map.fill(168, 40, 72, 90, hex('#b0a090'));
+  map.fill(78, 48, 84, 64, hex('#8fd060'));
+  for (let i = 0; i < 8; i++) map.fill(8 + (i % 4) * 16, 50 + Math.floor(i / 4) * 18, 12, 12, hex('#2f8a22'));
+  for (let i = 0; i < 5; i++) map.fill(20 + i * 14, 8, 10, 12, hex('#f7fbff'));
+  map.fill(96, 8, 28, 16, hex('#d0e8f8'));
+  map.fill(188, 18, 16, 18, hex('#8a8a96'));
+  map.fill(200, 78, 22, 14, hex('#5a4030'));
+  map.fill(108, 128, 22, 12, hex('#6a6a72'));
+  const label = (x, y, color) => map.fill(x, y, 18, 8, color);
+  label(100, 70, hex('#f4e7cb'));
+  return map;
 }
 
 function downsample(src, factor) {

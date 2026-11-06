@@ -1,0 +1,53 @@
+{
+  "prof_intro": [
+    "Hello! I am Professor Maple Hollis.",
+    "Willow Town is where I study Jakamon, the creatures who share our days.",
+    "Long ago Sol, Eater of Food, kept our sun bright and our tables full.",
+    "Team Eclipse wants that light for themselves. They hid five Sun Shards in the wild places.",
+    "If the shards go quiet, so does the day. I need a partner with a kind heart.",
+    "First, let me see who is setting out."
+  ],
+  "prof_idle": [
+    "The forest road is open. The other gates wake when a shard is safe.",
+    "Kai left in a hurry. Rivalry keeps them honest, I think."
+  ],
+  "nurse": [
+    "Welcome to Willow Hearth.",
+    "Your Jakamon look tired. May I restore them?"
+  ],
+  "nurse_done": [
+    "There. Everyone is bright-eyed again.",
+    "Travel kindly."
+  ],
+  "clerk": [
+    "Maple Market! Twine Balls, balm, and rope.",
+    "What can I pass across the counter?"
+  ],
+  "town_child": [
+    "I saw a white-haired trainer run toward the trees.",
+    "They said they would be famous by lunch."
+  ],
+  "town_elder": [
+    "The Hearth's sun mark is older than the market.",
+    "Sol liked this town because someone always shared a meal."
+  ],
+  "cave_swamp": ["MIRE TOWER", "A stone stair climbs out of the mud."],
+  "sol_wait": [
+    "The shards hum in a circle.",
+    "Sol is here, if you are ready to meet the sun."
+  ],
+  "sol_after": [
+    "The day feels wider.",
+    "Willow Town's kitchens will be busy tonight."
+  ],
+  "credits": [
+    "JAKAMON",
+    "A small daylight adventure.",
+    "Professor Maple Hollis believes in shared tables.",
+    "Kai will race you again tomorrow.",
+    "Team Eclipse has gone home to think.",
+    "Thank you for keeping the sun fed.",
+    "Art of the Jakamon belongs to their keeper.",
+    "Press Z to return."
+  ]
+}

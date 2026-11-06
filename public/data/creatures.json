@@ -1,0 +1,151 @@
+{
+  "milo": {
+    "name": "Milo",
+    "folder": "milo",
+    "type": "Gust",
+    "catchRate": 200,
+    "baseExp": 48,
+    "dex": "A blue-merle herding pup who turns every walk into a game.",
+    "base": { "hp": 48, "atk": 55, "def": 42, "spa": 35, "spd": 42, "spe": 68 },
+    "learn": [[1, "nuzzle"], [1, "play_bow"], [8, "herd_rush"], [14, "tailwind"], [20, "loyal_watch"]]
+  },
+  "lukas": {
+    "name": "Lukas",
+    "folder": "lukas",
+    "type": "Shade",
+    "catchRate": 190,
+    "baseExp": 50,
+    "dex": "A black tricolor pup who keeps watch long after the lamps go out.",
+    "base": { "hp": 52, "atk": 62, "def": 50, "spa": 35, "spd": 48, "spe": 55 },
+    "learn": [[1, "nuzzle"], [1, "night_bark"], [8, "shade_pounce"], [14, "loyal_watch"], [22, "gloom_veil"]]
+  },
+  "stinky_mango": {
+    "name": "Stinky Mango",
+    "folder": "stinky_mango",
+    "type": "Bloom",
+    "catchRate": 180,
+    "baseExp": 52,
+    "dex": "A striped rascal whose sweet mango smell arrives a moment before it does.",
+    "base": { "hp": 50, "atk": 48, "def": 42, "spa": 62, "spd": 48, "spe": 60 },
+    "learn": [[1, "nuzzle"], [1, "mango_pop"], [7, "sweet_note"], [13, "overripe"], [21, "flower_crown"]]
+  },
+  "isabelle_1_base": {
+    "name": "Izzy",
+    "folder": "isabelle_1_base",
+    "type": "Leaf",
+    "catchRate": 140,
+    "baseExp": 55,
+    "dex": "A small gardener who wears a sprout and waves at every beetle.",
+    "evolvesTo": "isabelle_2_evo1",
+    "evolveLevel": 16,
+    "base": { "hp": 44, "atk": 42, "def": 40, "spa": 58, "spd": 50, "spe": 50 },
+    "learn": [[1, "sprout_tap"], [1, "sweet_note"], [8, "vine_snap"], [12, "leaf_whisper"], [18, "petal_guard"]]
+  },
+  "isabelle_2_evo1": {
+    "name": "Bellisse",
+    "folder": "isabelle_2_evo1",
+    "type": "Leaf",
+    "catchRate": 70,
+    "baseExp": 90,
+    "dex": "Izzy grown bold, with a flower crown and a brighter step.",
+    "evolvesTo": "isabelle_3_evo2",
+    "evolveLevel": 32,
+    "base": { "hp": 60, "atk": 55, "def": 55, "spa": 78, "spd": 68, "spe": 68 },
+    "learn": [[1, "sprout_tap"], [1, "vine_snap"], [16, "leaf_whisper"], [20, "canopy_crash"], [28, "flower_crown"], [32, "sunbeam"]]
+  },
+  "isabelle_3_evo2": {
+    "name": "Isara",
+    "folder": "isabelle_3_evo2",
+    "type": "Leaf",
+    "catchRate": 40,
+    "baseExp": 140,
+    "dex": "The garden's own sunlight, dressed in sunflowers and kindness.",
+    "base": { "hp": 78, "atk": 70, "def": 70, "spa": 100, "spd": 85, "spe": 82 },
+    "learn": [[1, "vine_snap"], [1, "leaf_whisper"], [32, "canopy_crash"], [36, "noon_flare"], [40, "flower_crown"]]
+  },
+  "eden_1_base": {
+    "name": "Eden",
+    "folder": "eden_1_base",
+    "type": "Bloom",
+    "catchRate": 140,
+    "baseExp": 55,
+    "dex": "A vine-wrapped boy who talks to weeds as if they were neighbors.",
+    "evolvesTo": "eden_2_evo1",
+    "evolveLevel": 16,
+    "base": { "hp": 46, "atk": 52, "def": 44, "spa": 48, "spd": 44, "spe": 46 },
+    "learn": [[1, "sprout_tap"], [1, "mango_pop"], [8, "vine_snap"], [13, "golden_vine"], [18, "petal_guard"]]
+  },
+  "eden_2_evo1": {
+    "name": "Edric",
+    "folder": "eden_2_evo1",
+    "type": "Bloom",
+    "catchRate": 70,
+    "baseExp": 92,
+    "dex": "Eden with a staff of living wood and a longer stride.",
+    "evolvesTo": "eden_3_evo2",
+    "evolveLevel": 32,
+    "base": { "hp": 64, "atk": 78, "def": 62, "spa": 64, "spd": 60, "spe": 62 },
+    "learn": [[1, "vine_snap"], [1, "golden_vine"], [16, "canopy_crash"], [22, "royal_pose"], [30, "overripe"]]
+  },
+  "eden_3_evo2": {
+    "name": "Edenhart",
+    "folder": "eden_3_evo2",
+    "type": "Bloom",
+    "catchRate": 40,
+    "baseExp": 145,
+    "dex": "Vines of gold armor a gentle heart. Edenhart keeps the paths green.",
+    "base": { "hp": 84, "atk": 100, "def": 80, "spa": 84, "spd": 78, "spe": 74 },
+    "learn": [[1, "golden_vine"], [1, "canopy_crash"], [32, "royal_pose"], [36, "noon_flare"], [42, "flower_crown"]]
+  },
+  "princess_monkey_girl": {
+    "name": "Princess Monkey Girl",
+    "folder": "princess_monkey_girl",
+    "type": "Bloom",
+    "catchRate": 75,
+    "baseExp": 100,
+    "dex": "A small crowned friend of the canopy who expects a polite bow.",
+    "base": { "hp": 62, "atk": 58, "def": 55, "spa": 80, "spd": 70, "spe": 78 },
+    "learn": [[1, "sweet_note"], [1, "royal_pose"], [10, "song_spark"], [18, "overripe"], [26, "flower_crown"], [34, "gloom_veil"]]
+  },
+  "blu_the_elder": {
+    "name": "Blu the Elder",
+    "folder": "blu_the_elder",
+    "type": "Tide",
+    "catchRate": 60,
+    "baseExp": 110,
+    "dex": "An old blue-eyed guardian whose voice is as steady as a harbor.",
+    "base": { "hp": 90, "atk": 70, "def": 80, "spa": 75, "spd": 85, "spe": 45 },
+    "learn": [[1, "tide_slap"], [1, "calm_pool"], [12, "salt_crest"], [20, "steady"], [28, "deep_current"], [36, "pebble_toss"]]
+  },
+  "suki_song_of_sweetness": {
+    "name": "Suki",
+    "folder": "suki_song_of_sweetness",
+    "type": "Bloom",
+    "catchRate": 120,
+    "baseExp": 58,
+    "dex": "Suki, Song of Sweetness, hums until worried friends sit down and breathe.",
+    "base": { "hp": 46, "atk": 40, "def": 42, "spa": 70, "spd": 60, "spe": 72 },
+    "learn": [[1, "sweet_note"], [1, "song_spark"], [9, "flower_crown"], [16, "sunbeam"], [24, "daze_glare"]]
+  },
+  "tandra": {
+    "name": "Tandra",
+    "folder": "tandra",
+    "type": "Leaf",
+    "catchRate": 110,
+    "baseExp": 64,
+    "dex": "A striped climber with a leaf on its brow and dirt on its paws.",
+    "base": { "hp": 55, "atk": 68, "def": 52, "spa": 45, "spd": 50, "spe": 70 },
+    "learn": [[1, "sprout_tap"], [1, "pebble_toss"], [8, "vine_snap"], [15, "canopy_crash"], [22, "spark_hop"], [30, "static_pounce"]]
+  },
+  "sol": {
+    "name": "Sol",
+    "folder": "sol",
+    "type": "Sun",
+    "legendary": true,
+    "catchRate": 12,
+    "baseExp": 220,
+    "dex": "Sol, Eater of Food, a sun creature who keeps the daylight warm and the tables full.",
+    "base": { "hp": 110, "atk": 85, "def": 80, "spa": 120, "spd": 90, "spe": 85 },
+    "learn": [[1, "sunbeam"], [1, "feast_of_light"], [1, "noon_flare"], [1, "sun_mantle"], [1, "kindling"]]
+  }
+}

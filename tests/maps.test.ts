@@ -54,7 +54,7 @@ describe('shipped maps', () => {
       'route_mountain',
       'route_snow',
     ]);
-    expect(maps.town.warps.map((warp) => warp.map).sort()).toEqual(['lab', 'player_house', 'poke_center', 'poke_mart']);
+    expect(maps.town.warps.map((warp) => warp.map).sort()).toEqual(['hearth', 'lab', 'market', 'player_house', 'sun_shrine']);
     const flags = new Set<string>();
     for (const map of Object.values(maps)) {
       for (const gate of map.gates) {
@@ -64,9 +64,9 @@ describe('shipped maps', () => {
       }
       for (const connection of map.connections) expect(maps[connection.map]).toBeTruthy();
     }
-    expect(flags.has('dungeon1_cleared')).toBe(true);
-    expect(flags.has('dungeon4_cleared')).toBe(true);
-    for (const id of ['route_forest', 'route_beach', 'route_mountain', 'route_desert', 'route_snow']) {
+    expect(flags.has('dungeon_forest')).toBe(true);
+    expect(flags.has('dungeon_snow')).toBe(true);
+    for (const id of ['route_forest', 'route_beach', 'route_mountain', 'route_swamp', 'route_snow']) {
       expect(maps[id].encounter.some((cell) => cell === 1)).toBe(true);
     }
   });

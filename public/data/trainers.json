@@ -1,0 +1,170 @@
+{
+  "piper": {
+    "name": "PIPER",
+    "intro": ["I heard a song in the leaves!", "Show me your Jakamon!"],
+    "lose": ["Your friend sings louder. I like that."],
+    "prize": 400,
+    "party": [{ "species": "suki_song_of_sweetness", "level": 4 }]
+  },
+  "moss": {
+    "name": "RANGER MOSS",
+    "intro": ["The grove is tender. Step kindly."],
+    "lose": ["Kind steps. The trees noticed."],
+    "prize": 500,
+    "party": [{ "species": "isabelle_1_base", "level": 5 }]
+  },
+  "vesper": {
+    "name": "ADMIN VESPER",
+    "intro": ["Team Eclipse will dim this wood.", "The first Sun Shard is already ours."],
+    "lose": ["Take the shard. The sun is still too bright for my taste."],
+    "prize": 1200,
+    "flag": "dungeon_forest",
+    "party": [
+      { "species": "suki_song_of_sweetness", "level": 7 },
+      { "species": "isabelle_1_base", "level": 8 }
+    ]
+  },
+  "nia": {
+    "name": "NIA",
+    "intro": ["The tide brought me a partner. Want to see?"],
+    "lose": ["Ha! You swim better than I do."],
+    "prize": 700,
+    "party": [{ "species": "eden_1_base", "level": 9 }]
+  },
+  "cole": {
+    "name": "COLE",
+    "intro": ["Something sweet is on the wind. Battle first, snack after."],
+    "lose": ["You win. The mango smell was yours, wasn't it?"],
+    "prize": 700,
+    "party": [{ "species": "stinky_mango", "level": 9 }, { "species": "lukas", "level": 8 }]
+  },
+  "brine": {
+    "name": "ADMIN BRINE",
+    "intro": ["The sea cave hides a shard.", "Eclipse will drink the daylight."],
+    "lose": ["The shard is yours. Do not expect the mountain to be as wet and easy."],
+    "prize": 1600,
+    "flag": "dungeon_beach",
+    "party": [
+      { "species": "blu_the_elder", "level": 12 },
+      { "species": "stinky_mango", "level": 13 }
+    ]
+  },
+  "hart": {
+    "name": "HART",
+    "intro": ["I climb until the air thins. Battle me on the way."],
+    "lose": ["You have a good grip. Keep going."],
+    "prize": 900,
+    "party": [{ "species": "tandra", "level": 14 }]
+  },
+  "solene": {
+    "name": "SOLENE",
+    "intro": ["These stones remember the sun. I will test if you do."],
+    "lose": ["You remember. Good."],
+    "prize": 900,
+    "party": [{ "species": "blu_the_elder", "level": 15 }, { "species": "tandra", "level": 14 }]
+  },
+  "crag": {
+    "name": "ADMIN CRAG",
+    "intro": ["The mine's shard is Eclipse property.", "Turn back, little daylight."],
+    "lose": ["Fine. Carry the shard. The mire will swallow it."],
+    "prize": 2000,
+    "flag": "dungeon_mountain",
+    "party": [
+      { "species": "tandra", "level": 18 },
+      { "species": "blu_the_elder", "level": 18 }
+    ]
+  },
+  "puck": {
+    "name": "WARDEN PUCK",
+    "intro": ["Mind the mud. And mind my friend."],
+    "lose": ["You minded both. Impressive."],
+    "prize": 1100,
+    "party": [{ "species": "eden_1_base", "level": 19 }]
+  },
+  "june": {
+    "name": "JUNE",
+    "intro": ["The swamp grows sweet things in strange places."],
+    "lose": ["Your Jakamon is the sweetest thing here."],
+    "prize": 1100,
+    "party": [{ "species": "princess_monkey_girl", "level": 20 }, { "species": "suki_song_of_sweetness", "level": 18 }]
+  },
+  "mire": {
+    "name": "ADMIN MIRE",
+    "intro": ["Four shards would have been enough.", "I will take yours in the mud."],
+    "lose": ["Go freeze, then. The north shard still laughs at you."],
+    "prize": 2400,
+    "flag": "dungeon_swamp",
+    "party": [
+      { "species": "princess_monkey_girl", "level": 23 },
+      { "species": "isabelle_2_evo1", "level": 24 }
+    ]
+  },
+  "ren": {
+    "name": "REN",
+    "intro": ["Cold keeps me honest. Battle does too."],
+    "lose": ["Honest loss. I can live with that."],
+    "prize": 1400,
+    "party": [{ "species": "lukas", "level": 25 }]
+  },
+  "yuki": {
+    "name": "YUKI",
+    "intro": ["The ice cavern sings if you listen. First, we battle."],
+    "lose": ["Listen on the way in. The song is worth it."],
+    "prize": 1400,
+    "party": [{ "species": "blu_the_elder", "level": 26 }, { "species": "tandra", "level": 25 }]
+  },
+  "frost": {
+    "name": "ADMIN FROST",
+    "intro": ["The last shard. The sun's last errand.", "Team Eclipse ends the day here."],
+    "lose": ["Five shards. Take them to the shrine. Umbra is waiting, and so is the sun."],
+    "prize": 3000,
+    "flag": "dungeon_snow",
+    "party": [
+      { "species": "blu_the_elder", "level": 28 },
+      { "species": "eden_2_evo1", "level": 29 }
+    ]
+  },
+  "kai_1": {
+    "name": "KAI",
+    "intro": ["{player}! Professor Hollis let you pick first.", "I took the one you didn't. Let's see who chose better."],
+    "lose": ["Tch. Beginner's luck. I will be stronger past the trees."],
+    "prize": 600,
+    "flag": "kai_1",
+    "rival": true,
+    "party": [{ "species": "lukas", "level": 5 }]
+  },
+  "kai_2": {
+    "name": "KAI",
+    "intro": ["You already have a shard? I have a better partner.", "Do not get proud, {player}."],
+    "lose": ["Still you. I will reach the shrine first. Watch me."],
+    "prize": 1600,
+    "flag": "kai_2",
+    "rival": true,
+    "party": [{ "species": "lukas", "level": 16 }, { "species": "tandra", "level": 15 }]
+  },
+  "kai_3": {
+    "name": "KAI",
+    "intro": ["This is the door to Sol.", "If you go in, you go in after beating me."],
+    "lose": ["Go. Bring the sun home. I will be right behind you."],
+    "prize": 3200,
+    "flag": "kai_3",
+    "rival": true,
+    "party": [
+      { "species": "lukas", "level": 30 },
+      { "species": "isabelle_2_evo1", "level": 30 },
+      { "species": "blu_the_elder", "level": 31 }
+    ]
+  },
+  "umbra": {
+    "name": "UMBRA",
+    "intro": ["I am Umbra. Team Eclipse ends with me.", "Sol eats the light and calls it supper. I will put that hunger out."],
+    "lose": ["The shards are awake. Sol is free to choose. I hope the sun chooses you, and not another long night."],
+    "prize": 5000,
+    "flag": "beat_umbra",
+    "party": [
+      { "species": "isabelle_3_evo2", "level": 34 },
+      { "species": "eden_3_evo2", "level": 34 },
+      { "species": "princess_monkey_girl", "level": 35 }
+    ]
+  }
+}

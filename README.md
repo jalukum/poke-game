@@ -1,6 +1,62 @@
-# POKE GAME
+# Jakamon
 
-A personal, original Gen 3–style overworld that runs in the browser. The screen is a fixed 240×160 GBA frame, scaled with nearest-neighbor filtering (integer scale when that still fills the window, otherwise proportional letterboxing). This is not affiliated with Nintendo or Game Freak. The tiles and the trainer are original.
+A small original monster-catching game in a handheld 16-bit style. The screen is a fixed 240×160 frame, scaled with nearest-neighbor filtering and letterboxed to the window. It is not affiliated with Nintendo or Game Freak. Tiles, the trainer, names, and moves are original. The Jakamon sprites in `public/sprites/jakamon/` are the owner's art.
+
+Professor Maple Hollis of Willow Town studies Jakamon. Sol, Eater of Food, once kept the sun bright. Team Eclipse hid five Sun Shards. You clear the forest (open first), then the beach, the mountain, the mire, and the snow. Each dungeon boss opens the next gate. After the fifth shard, the sun shrine opens. Beat Umbra, then you may meet Sol.
+
+## Play
+
+```bash
+npm install
+npm run dev
+```
+
+Open the printed URL (`http://localhost:5173/poke-game/` by default).
+
+| Input | Action |
+| --- | --- |
+| Arrow keys | Walk and move cursors |
+| Z | Confirm (A) |
+| X | Cancel (B). Hold to run |
+| Enter | Start menu |
+| `` ` `` | Debug flag list |
+
+A tap on a new direction turns in place. Hold it to walk. On a phone, a D-pad plus A, B, and Start appears. Touch shows the controls; a keyboard hides them.
+
+New Game is an introduction, a look (style, 8 hair colours, skin, clothes), a letter-grid name, and a choice of Milo, Lukas, or Stinky Mango. Saves are version 2. A version 1 shell save migrates to an empty version 2 team.
+
+`npm test` covers movement, collision, saves, maps, battle math, catching, and evolution. `npm run build` writes `dist/`. Pushing `main` deploys to https://jalukum.github.io/poke-game/.
+
+## Data you can rewrite
+
+Everything named in the story lives in JSON:
+
+| File | Contents |
+| --- | --- |
+| `public/data/config.json` | Title, start tile, default flags |
+| `public/data/creatures.json` | Names, types, stats, learnsets, evolution |
+| `public/data/moves.json` | Moves |
+| `public/data/types.json` | Eight-type chart |
+| `public/data/items.json` | Bag items and the mart list (`mart: true`) |
+| `public/data/encounters.json` | Tall-grass tables and level ranges |
+| `public/data/trainers.json` | Rival, route trainers, Eclipse bosses, Umbra |
+| `public/data/dialogue/` | Professor, townsfolk, signs, credits |
+| `public/data/npcs.json` | Where people stand, and who battles on sight |
+
+Types are Sun, Leaf, Tide, Stone, Gust, Spark, Shade, and Bloom. A move of the user's own type is stronger. Gates use `dungeon_forest`, `dungeon_beach`, `dungeon_mountain`, `dungeon_swamp`, and `dungeon_snow`. The forest road is open. Each flag is set by winning that dungeon's boss and opens the next area. `beat_umbra` lets you speak to Sol. `sol_done` is the ending.
+
+Kai's first partner is whichever starter you did not take (Milo, Lukas, or Stinky Mango, in that cycle).
+
+`npm run generate` rebuilds the tileset, trainer sheets, world map picture, and Tiled maps. It overwrites `public/data/maps` and `config.json`. Edit maps in Tiled after generating, or edit the generator in `scripts/lib/world.mjs`.
+
+## Decisions
+
+- One overworld engine, separate maps connected at the edges, plus a MAP screen drawn from `public/sprites/worldmap.png`.
+- Healing is Willow Hearth. The shop is Maple Market. The sun mark on the Hearth door is original.
+- Hair and clothes are palette keys (`#ff00ff` and `#00e0e0`) swapped at runtime. Styles are fluff, cap, and ribbon.
+- Experience is `(level - 1)² × 10`. Izzy and Eden evolve at 16 and 32.
+- Catching is four shakes. Odds rise when HP is low and when the ball's `power` is higher.
+- Wild Jakamon are base forms only. Sol is only in the shrine after Umbra.
 
 The world is an empty shell: a town, four building interiors, and five biome routes with tall grass and small caves. There are no wild encounters, no parties, and no NPCs placed yet. Those systems read data files, so they show up when you add entries.
 

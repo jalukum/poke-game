@@ -8,9 +8,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
-        name: 'POKE GAME',
-        short_name: 'POKE GAME',
-        description: 'A personal Gen 3-style overworld.',
+        name: 'JAKAMON',
+        short_name: 'JAKAMON',
+        description: 'A personal daylight adventure about Jakamon.',
         theme_color: '#071018',
         background_color: '#000000',
         display: 'standalone',

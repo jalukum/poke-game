@@ -1,10 +1,12 @@
 {
-  "potion": {
-    "name": "POTION",
-    "description": "A spray that restores vitality."
-  },
-  "antidote": {
-    "name": "ANTIDOTE",
-    "description": "Cures a poison ailment."
-  }
+  "twine_ball": { "name": "TWINE BALL", "description": "A woven ball. A fair chance to catch a wild Jakamon.", "price": 200, "sell": 100, "kind": "ball", "power": 1, "mart": true },
+  "snare_ball": { "name": "SNARE BALL", "description": "A tighter weave. Better odds than a Twine Ball.", "price": 600, "sell": 300, "kind": "ball", "power": 1.5, "mart": true },
+  "dawn_seal": { "name": "DAWN SEAL", "description": "A warm seal that holds even a bright, stubborn Jakamon.", "price": 1200, "sell": 600, "kind": "ball", "power": 2, "mart": false },
+  "sun_balm": { "name": "SUN BALM", "description": "Restores 20 HP.", "price": 200, "sell": 100, "kind": "heal", "power": 20, "mart": true },
+  "noon_tonic": { "name": "NOON TONIC", "description": "Restores 50 HP.", "price": 700, "sell": 350, "kind": "heal", "power": 50, "mart": true },
+  "hearth_brew": { "name": "HEARTH BREW", "description": "Restores all HP.", "price": 1500, "sell": 750, "kind": "heal", "power": 999, "mart": true },
+  "clear_dew": { "name": "CLEAR DEW", "description": "Wakes a dazed Jakamon and eases sap.", "price": 400, "sell": 200, "kind": "status", "power": 0, "mart": true },
+  "dawn_feather": { "name": "DAWN FEATHER", "description": "Revives a fainted Jakamon to half HP.", "price": 1500, "sell": 750, "kind": "revive", "power": 0, "mart": true },
+  "trail_rope": { "name": "TRAIL ROPE", "description": "Leaves a dungeon and returns to its entrance.", "price": 500, "sell": 250, "kind": "rope", "power": 0, "mart": true },
+  "quiet_salt": { "name": "QUIET SALT", "description": "Wild Jakamon keep away for 80 steps.", "price": 400, "sell": 200, "kind": "repel", "power": 80, "mart": true }
 }

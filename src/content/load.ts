@@ -1,3 +1,5 @@
+import type { MoveDef } from '../sim/battle';
+import type { SpeciesDef } from '../sim/growth';
 import type { Dir } from '../sim/types';
 import { isDir } from '../sim/types';
 import { parseTiledMap, parseTilesetMeta, type TiledMapFile, type TiledTilesetFile, type TilesetMeta } from './tiled';
@@ -22,11 +24,44 @@ export interface NpcDef {
   sprite: string;
   facing: Dir;
   dialogue: string;
+  role?: 'nurse' | 'clerk' | 'pc' | 'professor' | 'sol';
+  trainer?: string;
+  sight?: number;
+}
+
+export interface TrainerDef {
+  name: string;
+  intro: string[];
+  lose: string[];
+  prize: number;
+  flag?: string;
+  rival?: boolean;
+  party: { species: string; level: number }[];
+}
+
+export interface EncounterTable {
+  rate: number;
+  min: number;
+  max: number;
+  table: { species: string; weight: number }[];
+}
+
+export interface MonArt {
+  idle1: HTMLImageElement;
+  idle2: HTMLImageElement;
+  attack: HTMLImageElement;
+  hurt: HTMLImageElement;
+  back: HTMLImageElement;
 }
 
 export interface ItemDef {
   name: string;
   description: string;
+  price?: number;
+  sell?: number;
+  kind?: 'ball' | 'heal' | 'status' | 'revive' | 'rope' | 'repel';
+  power?: number;
+  mart?: boolean;
 }
 
 export class TileSheet {
@@ -65,6 +100,14 @@ export interface Content {
   dialogue: Record<string, string[]>;
   npcs: NpcDef[];
   items: Record<string, ItemDef>;
+  creatures: Record<string, SpeciesDef>;
+  moves: Record<string, MoveDef>;
+  chart: Record<string, Record<string, number>>;
+  encounters: Record<string, EncounterTable>;
+  trainers: Record<string, TrainerDef>;
+  monArt: Record<string, MonArt>;
+  playerSheets: Record<string, HTMLImageElement>;
+  worldMap: HTMLImageElement;
   player: HTMLImageElement;
   npc: HTMLImageElement;
   item: HTMLImageElement;
@@ -113,7 +156,7 @@ function readNpcs(raw: unknown): NpcDef[] {
   for (const entry of raw) {
     if (!entry || typeof entry !== 'object') continue;
     const npc = entry as Partial<NpcDef>;
-    if (!npc.id || !npc.map || !npc.dialogue || !isDir(npc.facing)) continue;
+    if (!npc.id || !npc.map || !isDir(npc.facing)) continue;
     if (typeof npc.x !== 'number' || typeof npc.y !== 'number') continue;
     npcs.push({
       id: npc.id,
@@ -122,7 +165,10 @@ function readNpcs(raw: unknown): NpcDef[] {
       y: npc.y,
       sprite: npc.sprite || 'npc',
       facing: npc.facing,
-      dialogue: npc.dialogue,
+      dialogue: npc.dialogue || '',
+      role: npc.role,
+      trainer: npc.trainer,
+      sight: npc.sight,
     });
   }
   return npcs;
@@ -132,14 +178,37 @@ export async function loadGameContent(base: string): Promise<Content> {
   const config = readConfig(await fetchJson<Partial<GameConfig>>(`${base}data/config.json`));
   const tilesetJson = await fetchJson<TiledTilesetFile>(`${base}tilesets/overworld.tsj`);
   const meta = parseTilesetMeta(tilesetJson);
-  const [image, player, npc, item, npcJson, itemJson] = await Promise.all([
+  const [image, player, playerCap, playerRibbon, npc, item, worldMap, npcJson, itemJson, creatures, moves, typeFile, encounters, trainers] = await Promise.all([
     loadImage(`${base}tilesets/overworld.png`),
     loadImage(`${base}sprites/player.png`),
+    loadImage(`${base}sprites/player_cap.png`),
+    loadImage(`${base}sprites/player_ribbon.png`),
     loadImage(`${base}sprites/npc.png`),
     loadImage(`${base}sprites/item.png`),
+    loadImage(`${base}sprites/worldmap.png`),
     fetchJson<unknown>(`${base}data/npcs.json`),
     fetchJson<Record<string, ItemDef>>(`${base}data/items.json`),
+    fetchJson<Record<string, SpeciesDef>>(`${base}data/creatures.json`),
+    fetchJson<Record<string, MoveDef>>(`${base}data/moves.json`),
+    fetchJson<{ chart: Record<string, Record<string, number>> }>(`${base}data/types.json`),
+    fetchJson<Record<string, EncounterTable>>(`${base}data/encounters.json`),
+    fetchJson<Record<string, TrainerDef>>(`${base}data/trainers.json`),
   ]);
+  const monArt: Record<string, MonArt> = {};
+  await Promise.all(
+    Object.keys(creatures).map(async (id) => {
+      const folder = creatures[id]?.folder ?? id;
+      const root = `${base}sprites/jakamon/${folder}/`;
+      const [idle1, idle2, attack, hurt, back] = await Promise.all([
+        loadImage(`${root}idle1.png`),
+        loadImage(`${root}idle2.png`),
+        loadImage(`${root}attack.png`),
+        loadImage(`${root}hurt.png`),
+        loadImage(`${root}back.png`),
+      ]);
+      monArt[id] = { idle1, idle2, attack, hurt, back };
+    }),
+  );
   const maps: Record<string, RuntimeMap> = {};
   await Promise.all(
     config.maps.map(async (id) => {
@@ -164,6 +233,14 @@ export async function loadGameContent(base: string): Promise<Content> {
     dialogue,
     npcs: readNpcs(npcJson),
     items: itemJson,
+    creatures,
+    moves,
+    chart: typeFile.chart,
+    encounters,
+    trainers,
+    monArt,
+    playerSheets: { fluff: player, cap: playerCap, ribbon: playerRibbon },
+    worldMap,
     player,
     npc,
     item,

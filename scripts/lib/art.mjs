@@ -463,12 +463,13 @@ function paintDoor(style) {
   c.fill(7, 2, 1, 11, leafDk);
   c.px(10, 8, C.ember);
   if (style === 'center') {
-    c.px(7, 4, C.roofPinkDk);
-    c.px(8, 4, C.roofPinkDk);
-    c.px(7, 5, C.roofPinkDk);
-    c.px(8, 5, C.roofPinkDk);
-    c.px(6, 5, C.roofPinkDk);
-    c.px(9, 5, C.roofPinkDk);
+    c.fill(6, 4, 4, 3, C.ember);
+    c.px(5, 5, C.ember);
+    c.px(10, 5, C.ember);
+    c.px(7, 3, C.ember);
+    c.px(8, 3, C.ember);
+    c.px(7, 7, C.ember);
+    c.px(8, 7, C.ember);
   }
   return c;
 }
@@ -698,15 +699,15 @@ function paintPerson(dir, pose, pal) {
 }
 
 const PLAYER = {
-  hair: C.hair,
-  hairLt: C.hairLt,
-  cap: C.cap,
+  hair: hex('#ff00ff'),
+  hairLt: hex('#ff99ff'),
+  cap: hex('#ff00ff'),
   capDk: C.capDk,
   capLt: C.capLt,
   skin: C.skin,
   skinDk: C.skinDk,
-  jacket: C.jacket,
-  jacketDk: C.jacketDk,
+  jacket: hex('#00e0e0'),
+  jacketDk: hex('#0099aa'),
   shirt: C.shirt,
   shirtDk: C.shirtDk,
   pants: C.pants,
@@ -923,12 +924,17 @@ export function createArt() {
   add('pier', (c) => paintPier(c));
 
   const columns = 16;
-  const player = sheetFor(PLAYER);
+  const fluff = { ...PLAYER, cap: PLAYER.hair, capDk: hex('#cc00cc'), capLt: PLAYER.hairLt };
+  const cap = { ...PLAYER, cap: PLAYER.jacket, capDk: PLAYER.jacketDk, capLt: hex('#b0ffff') };
+  const ribbon = { ...PLAYER, cap: PLAYER.hair, capDk: hex('#ffd24a'), capLt: PLAYER.hairLt };
+  const player = sheetFor(fluff);
+  const playerCap = sheetFor(cap);
+  const playerRibbon = sheetFor(ribbon);
   const npc = sheetFor(VILLAGER);
   const item = paintItem();
   const icon = paintIcon(framesStand(player));
 
-  return { tiles, meta, ids, columns, player, npc, item, icon };
+  return { tiles, meta, ids, columns, player, playerCap, playerRibbon, npc, item, icon };
 }
 
 function framesStand(sheet) {

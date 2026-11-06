@@ -1,39 +1,42 @@
 {
-  "title": "POKE GAME",
+  "title": "JAKAMON",
   "playerName": "HERO",
   "textSpeed": 2,
   "showDebug": true,
   "start": {
     "map": "town",
-    "x": 8,
-    "y": 9,
+    "x": 30,
+    "y": 23,
     "facing": "down"
   },
   "defaultFlags": {
     "running_shoes": true,
-    "dungeon1_cleared": false,
-    "dungeon2_cleared": false,
-    "dungeon3_cleared": false,
-    "dungeon4_cleared": false
+    "dungeon_forest": false,
+    "dungeon_beach": false,
+    "dungeon_mountain": false,
+    "dungeon_swamp": false,
+    "dungeon_snow": false
   },
   "maps": [
     "town",
     "player_house",
-    "poke_center",
-    "poke_mart",
+    "hearth",
+    "market",
     "lab",
     "route_forest",
     "route_snow",
     "route_beach",
     "route_mountain",
-    "route_desert",
+    "route_swamp",
+    "sun_shrine",
     "dungeon_forest",
     "dungeon_snow",
     "dungeon_beach",
     "dungeon_mountain",
-    "dungeon_desert"
+    "dungeon_swamp"
   ],
   "dialogue": [
-    "world"
+    "world",
+    "story"
   ]
 }

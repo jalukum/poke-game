@@ -3,6 +3,7 @@ import { DX, DY, type Connection, type Dir, type MoveContext, type RuntimeMap, t
 
 export type WorldEvent =
   | { type: 'bump' }
+  | { type: 'step' }
   | { type: 'encounter'; x: number; y: number }
   | { type: 'warp'; warp: Warp }
   | { type: 'connection'; mapId: string; x: number; y: number; facing: Dir };
@@ -103,6 +104,7 @@ export function updatePlayer(actor: ActorState, input: MoveInput, map: RuntimeMa
     if (dest) events.push({ type: 'connection', ...dest });
   }
   if (step.arrived) {
+    events.push({ type: 'step' });
     const warp = warpAt(map, step.arrived.x, step.arrived.y);
     if (warp) events.push({ type: 'warp', warp });
     else if (isEncounterTile(map, step.arrived.x, step.arrived.y)) {
