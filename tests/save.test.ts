@@ -22,6 +22,15 @@ function sample(over: Partial<SaveGame> = {}): SaveGame {
     flags: { running_shoes: true, dungeon1_cleared: false },
     inventory: [{ id: 'potion', qty: 1 }],
     locationName: 'WILLOW TOWN',
+    money: 0,
+    appearance: { style: 'fluff', hair: 0, skin: 0, outfit: 0 },
+    party: [],
+    box: [],
+    seen: [],
+    caught: [],
+    repel: 0,
+    nextUid: 1,
+    starter: '',
     ...over,
   };
 }
@@ -52,6 +61,28 @@ describe('save slots', () => {
     expect(slots[1]).toBeNull();
     expect(slots[2]?.mapId).toBe('route_forest');
     expect(slots[2]?.playerName).toBe('BO');
+  });
+
+  it('migrates a version 1 shell into a version 2 save', () => {
+    const legacy = {
+      version: 1,
+      playerName: 'ADA',
+      playTimeMs: 10,
+      mapId: 'town',
+      x: 3,
+      y: 4,
+      facing: 'up',
+      flags: { running_shoes: true },
+      inventory: [],
+      locationName: 'WILLOW TOWN',
+    };
+    const loaded = normalizeSave(legacy);
+    expect(loaded.ok).toBe(true);
+    if (!loaded.ok) return;
+    expect(loaded.save.version).toBe(SAVE_VERSION);
+    expect(loaded.save.playerName).toBe('ADA');
+    expect(loaded.save.party).toEqual([]);
+    expect(loaded.save.x).toBe(3);
   });
 
   it('rejects corrupt data, future versions, and empty slots', () => {

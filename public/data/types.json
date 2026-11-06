@@ -1,0 +1,13 @@
+{
+  "types": ["Sun", "Leaf", "Tide", "Stone", "Gust", "Spark", "Shade", "Bloom"],
+  "chart": {
+    "Sun":   { "Sun": 1, "Leaf": 2, "Tide": 0.5, "Stone": 0.5, "Gust": 1, "Spark": 1, "Shade": 2, "Bloom": 2 },
+    "Leaf":  { "Sun": 0.5, "Leaf": 1, "Tide": 2, "Stone": 2, "Gust": 0.5, "Spark": 1, "Shade": 1, "Bloom": 0.5 },
+    "Tide":  { "Sun": 2, "Leaf": 0.5, "Tide": 1, "Stone": 2, "Gust": 1, "Spark": 0.5, "Shade": 1, "Bloom": 1 },
+    "Stone": { "Sun": 2, "Leaf": 0.5, "Tide": 0.5, "Stone": 1, "Gust": 2, "Spark": 2, "Shade": 1, "Bloom": 1 },
+    "Gust":  { "Sun": 1, "Leaf": 2, "Tide": 1, "Stone": 0.5, "Gust": 1, "Spark": 0.5, "Shade": 2, "Bloom": 2 },
+    "Spark": { "Sun": 1, "Leaf": 1, "Tide": 2, "Stone": 0.5, "Gust": 2, "Spark": 1, "Shade": 0.5, "Bloom": 1 },
+    "Shade": { "Sun": 0.5, "Leaf": 1, "Tide": 1, "Stone": 1, "Gust": 0.5, "Spark": 2, "Shade": 1, "Bloom": 2 },
+    "Bloom": { "Sun": 0.5, "Leaf": 2, "Tide": 1, "Stone": 2, "Gust": 0.5, "Spark": 1, "Shade": 0.5, "Bloom": 1 }
+  }
+}

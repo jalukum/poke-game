@@ -1,41 +1,43 @@
 import { gidOf } from './art.mjs';
 
-export const MAP_W = 40;
-export const MAP_H = 30;
+export const MAP_W = 52;
+export const MAP_H = 40;
 const RX = 19;
 const RY = 12;
 
 export const GAME_CONFIG = {
-  title: 'POKE GAME',
+  title: 'JAKAMON',
   playerName: 'HERO',
   textSpeed: 2,
   showDebug: true,
-  start: { map: 'town', x: 8, y: 9, facing: 'down' },
+  start: { map: 'town', x: 30, y: 23, facing: 'down' },
   defaultFlags: {
     running_shoes: true,
-    dungeon1_cleared: false,
-    dungeon2_cleared: false,
-    dungeon3_cleared: false,
-    dungeon4_cleared: false,
+    dungeon_forest: false,
+    dungeon_beach: false,
+    dungeon_mountain: false,
+    dungeon_swamp: false,
+    dungeon_snow: false,
   },
   maps: [
     'town',
     'player_house',
-    'poke_center',
-    'poke_mart',
+    'hearth',
+    'market',
     'lab',
     'route_forest',
     'route_snow',
     'route_beach',
     'route_mountain',
-    'route_desert',
+    'route_swamp',
+    'sun_shrine',
     'dungeon_forest',
     'dungeon_snow',
     'dungeon_beach',
     'dungeon_mountain',
-    'dungeon_desert',
+    'dungeon_swamp',
   ],
-  dialogue: ['world'],
+  dialogue: ['world', 'story'],
 };
 
 function createMap(id, name, w, h, extra = {}) {
@@ -383,15 +385,15 @@ export function buildMaps(art) {
   roadV(town, mart.x - 1, mart.y + 1, RY);
   roadH(town, house.y + 1, house.x, RX + 1);
   roadH(town, lab.y + 1, RX, lab.x);
-  gateH(town, RX, 1, 'dungeon1_cleared', g);
-  gateH(town, RX, MAP_H - 2, 'dungeon3_cleared', g);
-  gateV(town, MAP_W - 2, RY, 'dungeon2_cleared', g);
+  gateH(town, RX, 1, 'dungeon_swamp', g);
+  gateH(town, RX, MAP_H - 2, 'dungeon_forest', g);
+  gateV(town, MAP_W - 2, RY, 'dungeon_beach', g);
   connect(town, 'up', 'route_snow');
-  connect(town, 'down', 'route_mountain');
+  connect(town, 'down', 'route_beach');
   connect(town, 'left', 'route_forest');
-  connect(town, 'right', 'route_beach');
-  town.warps.push({ x: pc.x, y: pc.y, map: 'poke_center', tx: 7, ty: 7, facing: 'up' });
-  town.warps.push({ x: mart.x, y: mart.y, map: 'poke_mart', tx: 7, ty: 7, facing: 'up' });
+  connect(town, 'right', 'route_mountain');
+  town.warps.push({ x: pc.x, y: pc.y, map: 'hearth', tx: 7, ty: 7, facing: 'up' });
+  town.warps.push({ x: mart.x, y: mart.y, map: 'market', tx: 7, ty: 7, facing: 'up' });
   town.warps.push({ x: house.x, y: house.y, map: 'player_house', tx: 7, ty: 7, facing: 'up' });
   town.warps.push({ x: lab.x, y: lab.y, map: 'lab', tx: 7, ty: 7, facing: 'up' });
   // Little well beside the center path.
@@ -415,6 +417,17 @@ export function buildMaps(art) {
   sign(town, 22, 26, 'sign_mountain', g);
   sign(town, 36, 15, 'sign_beach', g);
   sign(town, 2, 15, 'sign_forest', g);
+  const shrineDoor = building(town, 40, 16, 7, 5, 'lab', g);
+  town.warps.push({ x: shrineDoor.x, y: shrineDoor.y, map: 'sun_shrine', tx: 7, ty: 7, facing: 'up' });
+  town.gates.push({
+    x: shrineDoor.x,
+    y: shrineDoor.y + 1,
+    w: 1,
+    h: 1,
+    flag: 'dungeon_snow',
+    tiles: [g('boulder')],
+  });
+  roadH(town, shrineDoor.y + 1, RX, shrineDoor.x);
   scatterTrees(
     town,
     [
@@ -442,7 +455,7 @@ export function buildMaps(art) {
     lab: { map: 'town', x: lab.x, y: lab.y + 1 },
   };
 
-  maps.poke_center = interior('poke_center', 'POKE CENTER', 'floor_tile', 'center', exits.center, g, (map) => {
+  maps.hearth = interior('hearth', 'WILLOW HEARTH', 'floor_tile', 'center', exits.center, g, (map) => {
     for (let x = 3; x <= 11; x++) {
       put('objects', map, x, 3, g(x === 6 ? 'machine' : 'counter'));
       occupy(map, x, 3);
@@ -453,7 +466,7 @@ export function buildMaps(art) {
     occupy(map, 2, 6);
   });
 
-  maps.poke_mart = interior('poke_mart', 'POKE MART', 'floor_mart', 'mart', exits.mart, g, (map) => {
+  maps.market = interior('market', 'MAPLE MARKET', 'floor_mart', 'mart', exits.mart, g, (map) => {
     for (const x of [2, 5, 10, 12]) {
       put('objects', map, x, 3, g('shelf'));
       occupy(map, x, 3);
@@ -500,9 +513,7 @@ export function buildMaps(art) {
   roadH(forest, RY, 2, MAP_W - 1);
   roadV(forest, RX, 2, MAP_H - 1);
   roadH(forest, 20, 6, RX + 1);
-  gateH(forest, RX, MAP_H - 2, 'dungeon4_cleared', g);
   connect(forest, 'right', 'town');
-  connect(forest, 'down', 'route_desert');
   const forestCave = caveMouth(forest, 8, 20, 'dungeon_forest', g);
   sign(forest, 6, 22, 'cave_forest', g);
   borderTrees(forest, g, false);
@@ -532,6 +543,8 @@ export function buildMaps(art) {
       [24, 8, 36, 11],
       [4, 16, 14, 18],
       [24, 18, 36, 26],
+      [6, 28, 18, 34],
+      [28, 30, 44, 36],
     ],
     g,
     salt('forest'),
@@ -541,7 +554,7 @@ export function buildMaps(art) {
   const snow = baseOutdoor('route_snow', 'FROST LANE', 'snow', g);
   roadV(snow, RX, 4, MAP_H - 1);
   roadH(snow, 8, RX, 26);
-  gateH(snow, RX, MAP_H - 2, 'dungeon1_cleared', g);
+  gateH(snow, RX, MAP_H - 2, 'dungeon_swamp', g);
   connect(snow, 'down', 'town');
   const snowCave = caveMouth(snow, 26, 8, 'dungeon_snow', g);
   sign(snow, 24, 10, 'cave_snow', g);
@@ -556,14 +569,14 @@ export function buildMaps(art) {
   scatterTrees(snow, [[4, 4], [8, 16], [28, 16], [14, 20], [30, 22]], true, g);
   resolvePaths(snow, g);
   varyGround(snow, [g('snow')], [g('snow_b'), g('snow_b')], salt('snow'));
-  clumps(snow, [g('snow'), g('snow_b')], 'tall_snow', [[4, 12, 16, 18], [24, 18, 36, 26]], g, salt('snow'));
+  clumps(snow, [g('snow'), g('snow_b')], 'tall_snow', [[4, 12, 16, 18], [24, 18, 36, 26], [8, 28, 20, 34], [30, 28, 46, 36]], g, salt('snow'));
   maps.route_snow = snow;
 
   const beach = baseOutdoor('route_beach', 'TIDAL REACH', 'sand', g);
-  roadH(beach, RY, 0, 24);
-  roadV(beach, 22, RY, 22);
-  gateV(beach, 1, RY, 'dungeon2_cleared', g);
-  connect(beach, 'left', 'town');
+  roadV(beach, RX, 0, 24);
+  roadH(beach, 22, 8, RX + 1);
+  gateH(beach, RX, 1, 'dungeon_forest', g);
+  connect(beach, 'up', 'town');
   for (let y = 0; y < MAP_H; y++) {
     put('ground', beach, 29, y, g('shore_w'));
     for (let x = 30; x < MAP_W; x++) put('ground', beach, x, y, g('water_0'));
@@ -584,17 +597,17 @@ export function buildMaps(art) {
   }
   resolvePaths(beach, g);
   varyGround(beach, [g('sand')], [g('sand_b'), g('sand_b')], salt('beach'));
-  clumps(beach, [g('sand'), g('sand_b')], 'tall_dune', [[4, 4, 18, 10], [6, 16, 18, 26]], g, salt('beach'));
+  clumps(beach, [g('sand'), g('sand_b')], 'tall_dune', [[4, 4, 18, 10], [6, 16, 18, 26], [8, 28, 22, 36]], g, salt('beach'));
   maps.route_beach = beach;
 
   const mountain = baseOutdoor('route_mountain', 'RIDGE TRAIL', 'gravel', g);
   roadV(mountain, RX, 0, 20);
   roadH(mountain, RY, 0, RX + 1);
   roadH(mountain, 18, RX, 30);
-  gateH(mountain, RX, 1, 'dungeon3_cleared', g);
-  gateV(mountain, 1, RY, 'dungeon4_cleared', g);
-  connect(mountain, 'up', 'town');
-  connect(mountain, 'left', 'route_desert');
+  gateV(mountain, 1, RY, 'dungeon_beach', g);
+  gateH(mountain, RX, 1, 'dungeon_mountain', g);
+  connect(mountain, 'left', 'town');
+  connect(mountain, 'up', 'route_swamp');
   const mountainCave = caveMouth(mountain, 30, 18, 'dungeon_mountain', g);
   sign(mountain, 28, 20, 'cave_mountain', g);
   borderCliffs(mountain, g);
@@ -613,45 +626,40 @@ export function buildMaps(art) {
   }
   resolvePaths(mountain, g);
   varyGround(mountain, [g('gravel')], [g('gravel_b'), g('gravel_b')], salt('mountain'));
-  clumps(mountain, [g('gravel'), g('gravel_b')], 'tall_scrub', [[4, 16, 16, 26], [24, 6, 36, 12]], g, salt('mountain'));
+  clumps(mountain, [g('gravel'), g('gravel_b')], 'tall_scrub', [[4, 16, 16, 26], [24, 6, 36, 12], [8, 28, 22, 36], [30, 24, 46, 34]], g, salt('mountain'));
   maps.route_mountain = mountain;
 
-  const desert = baseOutdoor('route_desert', 'DUNE WALK', 'sand', g);
-  roadV(desert, RX, 0, 22);
-  roadH(desert, RY, RX, MAP_W - 1);
-  roadH(desert, 20, 8, RX + 1);
-  gateH(desert, RX, 1, 'dungeon4_cleared', g);
-  gateV(desert, MAP_W - 2, RY, 'dungeon4_cleared', g);
-  connect(desert, 'up', 'route_forest');
-  connect(desert, 'right', 'route_mountain');
-  const desertCave = caveMouth(desert, 8, 20, 'dungeon_desert', g);
-  sign(desert, 6, 22, 'cave_desert', g);
-  borderCliffs(desert, g);
-  for (const [x, y] of [
-    [6, 6],
-    [14, 8],
-    [28, 6],
-    [10, 16],
-    [30, 20],
-    [16, 24],
-  ]) {
-    if (freeCell(desert, x, y) && freeCell(desert, x, y + 1)) {
-      put('objects', desert, x, y, g('cactus_top'));
-      put('objects', desert, x, y + 1, g('cactus_bot'));
-      occupy(desert, x, y);
-      occupy(desert, x, y + 1);
+  const swamp = baseOutdoor('route_swamp', 'MIRE PATH', 'grass', g);
+  roadV(swamp, RX, 0, MAP_H - 1);
+  roadH(swamp, 16, 6, RX + 1);
+  gateH(swamp, RX, MAP_H - 2, 'dungeon_mountain', g);
+  connect(swamp, 'down', 'route_mountain');
+  const swampCave = caveMouth(swamp, 10, 16, 'dungeon_swamp', g);
+  sign(swamp, 8, 18, 'cave_swamp', g);
+  for (let y = 4; y <= 12; y++) {
+    for (let x = 4; x <= 14; x++) {
+      if ((x + y) % 5 === 0 && freeCell(swamp, x, y)) {
+        put('ground', swamp, x, y, g('water_0'));
+        occupy(swamp, x, y);
+      }
     }
   }
-  resolvePaths(desert, g);
-  varyGround(desert, [g('sand')], [g('sand_b'), g('sand_b')], salt('desert'));
-  clumps(desert, [g('sand'), g('sand_b')], 'tall_sand', [[4, 8, 16, 14], [24, 16, 36, 26]], g, salt('desert'));
-  maps.route_desert = desert;
+  borderTrees(swamp, g, false);
+  resolvePaths(swamp, g);
+  varyGround(swamp, [g('grass')], [g('grass_b'), g('grass_c')], salt('swamp'));
+  flowers(swamp, grassIds, g, salt('swamp'));
+  clumps(swamp, grassIds, 'tall', [[16, 4, 30, 12], [30, 18, 46, 28], [6, 24, 20, 34], [28, 30, 44, 36]], g, salt('swamp'));
+  maps.route_swamp = swamp;
 
   maps.dungeon_forest = dungeon('dungeon_forest', 'SHADED GROTTO', { map: 'route_forest', x: forestCave.x, y: forestCave.y + 1 }, g);
   maps.dungeon_snow = dungeon('dungeon_snow', 'FROST CAVE', { map: 'route_snow', x: snowCave.x, y: snowCave.y + 1 }, g);
   maps.dungeon_beach = dungeon('dungeon_beach', 'TIDE CAVE', { map: 'route_beach', x: beachCave.x, y: beachCave.y + 1 }, g);
   maps.dungeon_mountain = dungeon('dungeon_mountain', 'RIDGE CAVE', { map: 'route_mountain', x: mountainCave.x, y: mountainCave.y + 1 }, g);
-  maps.dungeon_desert = dungeon('dungeon_desert', 'DUNE CAVE', { map: 'route_desert', x: desertCave.x, y: desertCave.y + 1 }, g);
+  maps.dungeon_swamp = dungeon('dungeon_swamp', 'MIRE TOWER', { map: 'route_swamp', x: swampCave.x, y: swampCave.y + 1 }, g);
+  maps.sun_shrine = interior('sun_shrine', 'SUN SHRINE', 'floor_lab', 'lab', { map: 'town', x: 36, y: 22, facing: 'down' }, g, (map) => {
+    put('objects', map, 7, 3, g('machine'));
+    occupy(map, 7, 3);
+  });
 
   // Dungeon signs used the map id as the dialogue id inside dungeon(). Point those
   // at the written scripts by rewriting the dialogue field to the cave_* ids already
@@ -661,7 +669,7 @@ export function buildMaps(art) {
     dungeon_snow: 'dungeon_snow',
     dungeon_beach: 'dungeon_beach',
     dungeon_mountain: 'dungeon_mountain',
-    dungeon_desert: 'dungeon_desert',
+    dungeon_swamp: 'dungeon_swamp',
   };
   for (const [id, dialogue] of Object.entries(dungeonDialogue)) {
     for (const s of maps[id].signs) s.dialogue = dialogue;

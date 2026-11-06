@@ -2,13 +2,30 @@ import type { Dir } from './types';
 import { isDir } from './types';
 
 /** Bump this when the stored shape changes, and teach `normalizeSave` how to migrate. */
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 export const SLOT_COUNT = 3;
 
 export interface InventoryEntry {
   id: string;
   qty: number;
+}
+
+export interface Appearance {
+  style: 'fluff' | 'cap' | 'ribbon';
+  hair: number;
+  skin: number;
+  outfit: number;
+}
+
+export interface SavedMon {
+  uid: number;
+  species: string;
+  level: number;
+  exp: number;
+  hp: number;
+  status: '' | 'sap' | 'daze';
+  moves: { id: string; pp: number }[];
 }
 
 export interface SaveGame {
@@ -22,6 +39,19 @@ export interface SaveGame {
   flags: Record<string, boolean>;
   inventory: InventoryEntry[];
   locationName: string;
+  money: number;
+  appearance: Appearance;
+  party: SavedMon[];
+  box: SavedMon[];
+  seen: string[];
+  caught: string[];
+  repel: number;
+  nextUid: number;
+  starter: string;
+}
+
+export function defaultAppearance(): Appearance {
+  return { style: 'fluff', hair: 0, skin: 0, outfit: 0 };
 }
 
 export type LoadResult = { ok: true; save: SaveGame } | { ok: false; reason: 'empty' | 'corrupt' | 'version' };
@@ -42,14 +72,67 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-export function normalizeSave(raw: unknown): LoadResult {
-  if (!isRecord(raw)) return { ok: false, reason: 'corrupt' };
+function readMons(value: unknown): SavedMon[] | null {
+  if (!Array.isArray(value)) return [];
+  const mons: SavedMon[] = [];
+  for (const entry of value) {
+    if (!isRecord(entry) || typeof entry.species !== 'string' || typeof entry.level !== 'number') return null;
+    if (!Array.isArray(entry.moves)) return null;
+    const moves: { id: string; pp: number }[] = [];
+    for (const move of entry.moves) {
+      if (!isRecord(move) || typeof move.id !== 'string' || typeof move.pp !== 'number') return null;
+      moves.push({ id: move.id, pp: move.pp });
+    }
+    const status = entry.status === 'sap' || entry.status === 'daze' ? entry.status : '';
+    mons.push({
+      uid: typeof entry.uid === 'number' ? entry.uid : mons.length + 1,
+      species: entry.species,
+      level: entry.level,
+      exp: typeof entry.exp === 'number' ? entry.exp : 0,
+      hp: typeof entry.hp === 'number' ? entry.hp : 1,
+      status,
+      moves,
+    });
+  }
+  return mons;
+}
+
+function readAppearance(value: unknown): Appearance {
+  if (!isRecord(value)) return defaultAppearance();
+  const style = value.style === 'cap' || value.style === 'ribbon' || value.style === 'fluff' ? value.style : 'fluff';
+  return {
+    style,
+    hair: typeof value.hair === 'number' ? value.hair : 0,
+    skin: typeof value.skin === 'number' ? value.skin : 0,
+    outfit: typeof value.outfit === 'number' ? value.outfit : 0,
+  };
+}
+
+/** Version 1 shells had no party. They become version 2 with an empty team. */
+export function migrateSave(raw: Record<string, unknown>): Record<string, unknown> {
+  if (raw.version !== 1) return raw;
+  return {
+    ...raw,
+    version: 2,
+    money: 0,
+    appearance: defaultAppearance(),
+    party: [],
+    box: [],
+    seen: [],
+    caught: [],
+    repel: 0,
+    nextUid: 1,
+    starter: '',
+  };
+}
+
+export function normalizeSave(input: unknown): LoadResult {
+  if (!isRecord(input)) return { ok: false, reason: 'corrupt' };
+  let raw: Record<string, unknown> = input;
   if (typeof raw.version !== 'number') return { ok: false, reason: 'corrupt' };
   if (raw.version > SAVE_VERSION || raw.version < 1) return { ok: false, reason: 'version' };
-  if (raw.version !== SAVE_VERSION) {
-    // Older saves would be migrated here. None exist yet.
-    return { ok: false, reason: 'version' };
-  }
+  if (raw.version < SAVE_VERSION) raw = migrateSave(raw);
+  if (raw.version !== SAVE_VERSION) return { ok: false, reason: 'version' };
   if (typeof raw.playerName !== 'string' || raw.playerName.length === 0) return { ok: false, reason: 'corrupt' };
   if (typeof raw.playTimeMs !== 'number' || raw.playTimeMs < 0) return { ok: false, reason: 'corrupt' };
   if (typeof raw.mapId !== 'string' || raw.mapId.length === 0) return { ok: false, reason: 'corrupt' };
@@ -71,19 +154,34 @@ export function normalizeSave(raw: unknown): LoadResult {
     if (entry.qty > 0) inventory.push({ id: entry.id, qty: Math.floor(entry.qty) });
   }
 
+  const party = readMons(raw.party);
+  const box = readMons(raw.box);
+  if (!party || !box) return { ok: false, reason: 'corrupt' };
+  const seen = Array.isArray(raw.seen) ? raw.seen.filter((id): id is string => typeof id === 'string') : [];
+  const caught = Array.isArray(raw.caught) ? raw.caught.filter((id): id is string => typeof id === 'string') : [];
+
   return {
     ok: true,
     save: {
       version: SAVE_VERSION,
-      playerName: raw.playerName,
-      playTimeMs: raw.playTimeMs,
-      mapId: raw.mapId,
-      x: raw.x,
-      y: raw.y,
+      playerName: raw.playerName as string,
+      playTimeMs: raw.playTimeMs as number,
+      mapId: raw.mapId as string,
+      x: raw.x as number,
+      y: raw.y as number,
       facing: raw.facing,
       flags,
       inventory,
-      locationName: raw.locationName,
+      locationName: raw.locationName as string,
+      money: typeof raw.money === 'number' ? raw.money : 0,
+      appearance: readAppearance(raw.appearance),
+      party,
+      box,
+      seen,
+      caught,
+      repel: typeof raw.repel === 'number' ? raw.repel : 0,
+      nextUid: typeof raw.nextUid === 'number' ? raw.nextUid : 1,
+      starter: typeof raw.starter === 'string' ? raw.starter : '',
     },
   };
 }

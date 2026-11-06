@@ -1,0 +1,31 @@
+{
+  "route_forest": { "rate": 18, "min": 2, "max": 5, "table": [
+    { "species": "milo", "weight": 40 },
+    { "species": "isabelle_1_base", "weight": 35 },
+    { "species": "suki_song_of_sweetness", "weight": 25 }
+  ]},
+  "route_beach": { "rate": 18, "min": 6, "max": 10, "table": [
+    { "species": "lukas", "weight": 30 },
+    { "species": "stinky_mango", "weight": 35 },
+    { "species": "eden_1_base", "weight": 25 },
+    { "species": "suki_song_of_sweetness", "weight": 10 }
+  ]},
+  "route_mountain": { "rate": 18, "min": 12, "max": 16, "table": [
+    { "species": "tandra", "weight": 40 },
+    { "species": "blu_the_elder", "weight": 20 },
+    { "species": "isabelle_1_base", "weight": 25 },
+    { "species": "milo", "weight": 15 }
+  ]},
+  "route_swamp": { "rate": 20, "min": 18, "max": 23, "table": [
+    { "species": "princess_monkey_girl", "weight": 25 },
+    { "species": "eden_1_base", "weight": 30 },
+    { "species": "stinky_mango", "weight": 25 },
+    { "species": "suki_song_of_sweetness", "weight": 20 }
+  ]},
+  "route_snow": { "rate": 18, "min": 24, "max": 29, "table": [
+    { "species": "blu_the_elder", "weight": 30 },
+    { "species": "tandra", "weight": 25 },
+    { "species": "lukas", "weight": 25 },
+    { "species": "princess_monkey_girl", "weight": 20 }
+  ]}
+}
