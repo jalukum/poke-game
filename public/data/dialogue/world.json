@@ -1,0 +1,21 @@
+{
+  "town_sign": ["WILLOW TOWN", "A quiet place to start out."],
+  "pc_sign": ["POKE CENTER", "The lights are on, but the counter is empty."],
+  "mart_sign": ["POKE MART"],
+  "house_sign": ["{player}'s HOUSE"],
+  "lab_sign": ["PROFESSOR'S LAB", "Nobody is here yet."],
+  "sign_snow": ["FROST LANE", "A gate blocks the north road."],
+  "sign_beach": ["TIDAL REACH", "Waves break past the east gate."],
+  "sign_mountain": ["RIDGE TRAIL", "The south road is closed."],
+  "sign_forest": ["VERDANT PATH", "The west road is open."],
+  "cave_forest": ["SHADED GROTTO"],
+  "cave_snow": ["FROST CAVE"],
+  "cave_beach": ["TIDE CAVE"],
+  "cave_mountain": ["RIDGE CAVE"],
+  "cave_desert": ["DUNE CAVE"],
+  "dungeon_forest": ["The cave is still and empty."],
+  "dungeon_snow": ["Your breath fogs in the dark."],
+  "dungeon_beach": ["Water drips somewhere out of sight."],
+  "dungeon_mountain": ["Loose stones shift underfoot."],
+  "dungeon_desert": ["Warm air drifts through the ruin."]
+}

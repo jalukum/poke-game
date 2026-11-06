@@ -1,0 +1,39 @@
+{
+  "title": "POKE GAME",
+  "playerName": "HERO",
+  "textSpeed": 2,
+  "showDebug": true,
+  "start": {
+    "map": "town",
+    "x": 8,
+    "y": 9,
+    "facing": "down"
+  },
+  "defaultFlags": {
+    "running_shoes": true,
+    "dungeon1_cleared": false,
+    "dungeon2_cleared": false,
+    "dungeon3_cleared": false,
+    "dungeon4_cleared": false
+  },
+  "maps": [
+    "town",
+    "player_house",
+    "poke_center",
+    "poke_mart",
+    "lab",
+    "route_forest",
+    "route_snow",
+    "route_beach",
+    "route_mountain",
+    "route_desert",
+    "dungeon_forest",
+    "dungeon_snow",
+    "dungeon_beach",
+    "dungeon_mountain",
+    "dungeon_desert"
+  ],
+  "dialogue": [
+    "world"
+  ]
+}

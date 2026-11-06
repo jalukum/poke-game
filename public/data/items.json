@@ -1,0 +1,10 @@
+{
+  "potion": {
+    "name": "POTION",
+    "description": "A spray that restores vitality."
+  },
+  "antidote": {
+    "name": "ANTIDOTE",
+    "description": "Cures a poison ailment."
+  }
+}
