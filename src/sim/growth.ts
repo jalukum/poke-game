@@ -83,8 +83,11 @@ export function grantExp(mon: MonInst, amount: number): { mon: MonInst; levels: 
   return { mon: { ...mon, exp, level }, levels: level - before };
 }
 
+/** Global EXP boost (owner request: 10x). */
+export const EXP_MULTIPLIER = 10;
+
 export function expYield(foe: SpeciesDef, foeLevel: number): number {
-  return Math.max(8, Math.floor((foe.baseExp * foeLevel) / 6));
+  return Math.max(8, Math.floor((foe.baseExp * foeLevel) / 6)) * EXP_MULTIPLIER;
 }
 
 export function learnableNow(species: SpeciesDef, previousLevel: number, level: number): string[] {
