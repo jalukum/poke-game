@@ -1,0 +1,11 @@
+[
+  {
+    "id": "villager",
+    "map": "town",
+    "x": 12,
+    "y": 14,
+    "sprite": "npc",
+    "facing": "down",
+    "dialogue": "villager_hello"
+  }
+]

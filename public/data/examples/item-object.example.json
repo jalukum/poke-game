@@ -1,0 +1,12 @@
+{
+  "name": "potion",
+  "type": "item",
+  "x": 192,
+  "y": 160,
+  "width": 16,
+  "height": 16,
+  "properties": [
+    { "name": "item", "type": "string", "value": "potion" },
+    { "name": "flag", "type": "string", "value": "got_town_potion" }
+  ]
+}
